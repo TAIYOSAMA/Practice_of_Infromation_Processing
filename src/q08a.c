@@ -1,3 +1,4 @@
+/* ポインタが指す変数の値の表示 */
 #include <stdio.h>
 
 int main () {
