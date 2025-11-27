@@ -5,7 +5,7 @@
 
 int main () {
     //a、xは問題では明記されていませんが、浮動小数点数に対応させています。
-    double a[n] = {0}; 
+    double a[n]; 
     double x;
     double y = 0;
 
