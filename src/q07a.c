@@ -24,23 +24,23 @@ int main () {
     int temp;
     while (fscanf(fp, "%d %d", &n, &temp) == 2)
         k[n] = temp;
-    max_n = n;
+    max_n = n + 1;
 
     // それぞれ単純移動平均を求める
-    for (int i = N1; i <= max_n; i++) { //N1
+    for (int i = N1; i < max_n; i++) { //N1
         for (int j = 0; j < N1; j++)
             P_N1[i] += k[i - j];
         P_N1[i] /= N1;
     }
 
-    for (int i = N2; i <= max_n; i++) { //N2
+    for (int i = N2; i < max_n; i++) { //N2
         for (int j = 0; j < N2; j++)
             P_N2[i] += k[i - j];
         P_N2[i] /= N2;
     }
 
     // 計算結果をファイルに出力
-    for (int i = N2; i <= max_n; i++)
+    for (int i = N2; i < max_n; i++)
         fprintf(fout, "%d %f %f %f\n", i, P_N1[i], P_N2[i], P_N1[i] - P_N2[i]);
 
     fclose(fp);
