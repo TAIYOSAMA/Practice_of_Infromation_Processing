@@ -29,19 +29,17 @@ int main () {
     // それぞれ単純移動平均を求める
     for (int i = 0; i < N1; i++)
         P_N1[N1 - 1] += k[N1 - 1 - i];
-    for (int i = N1 - 1; i < max_n - 1; i++) {
+    for (int i = N1 - 1; i < max_n - 1; i++)
         P_N1[i + 1] = P_N1[i] - k[i - N1 + 1] + k[i + 1];
+    for (int i = N1 -1; i < max_n; i++) 
         P_N1[i] /= N1;
-    }
-    P_N1[max_n - 1] /= N1;
 
     for (int i = 0; i < N2; i++)
         P_N2[N2 - 1] += k[N2 - 1 - i];
-    for (int i = N2 - 1; i < max_n - 1; i++) { //N2
+    for (int i = N2 - 1; i < max_n - 1; i++)
         P_N2[i + 1] = P_N2[i] - k[i - N2 + 1] + k[i + 1];
+    for (int i = N2 - 1; i < max_n; i++)
         P_N2[i] /= N2;
-    }
-    P_N2[max_n - 1] /= N2;
 
     // 計算結果をファイルに出力
     for (int i = N2 - 1; i < max_n; i++)
