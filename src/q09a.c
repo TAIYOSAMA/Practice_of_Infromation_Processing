@@ -17,4 +17,6 @@ int main () {
 
     // 出力
     printf("Output:%s\n", str);
+
+    return 0;
 }
