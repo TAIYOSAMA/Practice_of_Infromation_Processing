@@ -8,7 +8,7 @@ int factorial (int n) {
         return factorial(n - 1) * n;
 }
 
-int combination (int n, int r) {
+int choose (int n, int r) {
     if (n < r) exit(1);
     return factorial(n) / (factorial(r) * factorial(n - r));
 }
@@ -21,7 +21,7 @@ int main () {
     printf("r=");
     scanf("%d", &r);
 
-    printf("ans=%d\n", combination(n, r));
+    printf("ans=%d\n", choose(n, r));
 
     return 0;
 }
