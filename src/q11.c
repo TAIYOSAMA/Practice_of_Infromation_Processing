@@ -2,55 +2,67 @@
 
 #define N 100
 
+// 配列の要素数（-1終端）
+int length(const int X[]) {
+    int i = 0;
+    while (X[i] != -1) i++;
+    return i;
+}
+
 // 配列に要素を入力するための関数
 void inputArray (int X[], int n, char *label) {
     printf("%s", label);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &X[i]);
-        if (X[i] == 0 || X[i] <= -2) i--; 
-        if (X[i] == -1) break;
+
+    int x;
+    int i = 0;
+
+    while (i < n - 1) {
+        scanf("%d", &x);
+
+        if (x == -1) break;
+        if (x <= 0) continue;
+
+        X[i++] = x;
     }
+
+    X[i] = -1;
+
     return;
 }
 
-// -1の一つ前までの要素を出力（nは最大要素数を表す）
-void printArray (int X[], int n) {
+// 要素を表示
+void printArray (const int X[]) {
     printf("{");
-    int i;
-    for (i = 0; i < n - 1; i++) {
-        if (X[i + 1] == -1) break;
-        printf("%d,", X[i]);
+    for (int i = 0; X[i] != -1; i++) {
+        if (i > 0) printf(",");
+        printf("%d", X[i]);
     }
-    printf("%d}\n", X[i]);
+    printf("}\n");
     return;
 }
 
-// 重複した数値を削除（ソートされている配列のみ）
-void deleteSameNumFromSortedArray (int X[], int n) {
+// 昇順ソート済み配列に対して、隣接する重複要素を削除
+void unique (int X[]) {
+    int len = length(X);
     int j = 0;
-    for (int i = 1; i < n; i++) {
+
+    for (int i = 1; i < len; i++) {
         if (X[j] != X[i]) {
             X[++j] = X[i];
         }
-        if (X[i] == -1) {
-            X[j] = -1;
-            j++;
-            while (X[j] != 0 && j < N) {
-                X[j++] = 0;
-            }
-            break;
-        }
     }
-
+    X[j + 1] = -1;
     return;
 }
 
 // 昇順にソート
-void sort (int X[], int n) {
+void sort (int X[]) {
+    int len = length(X);
     int temp;
-    for (int i = n - 1; i > 1; i--) {
+
+    for (int i = len - 1; i > 0; i--) {
         for (int j = 0; j < i; j++) {
-            if (X[j] > X[j + 1] && X[j] > 0 && X[j + 1] > 0) {
+            if (X[j] > X[j + 1]) {
                 temp = X[j];
                 X[j] = X[j + 1];
                 X[j + 1] = temp;
@@ -61,47 +73,44 @@ void sort (int X[], int n) {
 }
 
 // 配列を表示用に整形
-void formatArray(int X[], int n) {
-    sort(X, n);
-    deleteSameNumFromSortedArray(X, n);
+void formatArray(int X[]) {
+    sort(X);
+    unique(X);
     return;
 }
 
 // 共通部分集合を計算
-void calcCommon (int X[], int n, int A[], int nA, int B[], int nB) {
+void calcCommon (int X[], const int A[], const int B[]) {
     int k = 0;
-    for (int i = 0; i < nA; i++) {
-        if (A[i] == -1) break;
-        for (int j = 0; j < nB; j++) {
-            if (B[j] == -1) break;
+    for (int i = 0; A[i] != -1; i++) {
+        for (int j = 0; B[j] != -1; j++) {
             if (A[i] == B[j]) {
                 X[k++] = A[i];
+                break;
             }
         }
     }
 
     X[k] = -1;
 
-    formatArray(X, n);
+    formatArray(X);
 
     return;
 }
 
 // 和集合を計算
-void calcUnion (int X[], int n, int A[], int nA, int B[], int nB) {
+void calcUnion (int X[], const int A[], const int B[]) {
     int k = 0;
-    for (int i = 0; i < nA; i++) {
-        if (A[i] == -1) break;
+    for (int i = 0; A[i] != -1; i++) {
         X[k++] = A[i];
     }
-    for (int i = 0; i < nA; i++) {
-        if (B[i] == -1) break;
+    for (int i = 0; B[i] != -1; i++) {
         X[k++] = B[i];
     }
 
     X[k] = -1;
 
-    formatArray(X, n);
+    formatArray(X);
 
     return;
 }
@@ -110,7 +119,6 @@ int main () {
     // 集合の初期化
     int A[N] = {0};
     int B[N] = {0};
-
     int AandB[N] = {0};
     int AorB[N * 2] = {0};
 
@@ -119,14 +127,14 @@ int main () {
     inputArray(B, N, "SetB: ");
 
     // 共通部分集合を出力
-    calcCommon(AandB, N, A, N, B, N);
+    calcCommon(AandB, A, B);
     printf("Common subset: ");
-    printArray(AandB, N);
+    printArray(AandB);
 
     // 和集合を出力
-    calcUnion(AorB, N * 2, A, N, B, N);
+    calcUnion(AorB, A, B);
     printf("Union set: ");
-    printArray(AorB, N * 2);
+    printArray(AorB);
 
     return 0;
 }
