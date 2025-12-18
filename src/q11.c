@@ -26,8 +26,6 @@ void inputArray (int X[], int n, char *label) {
     }
 
     X[i] = -1;
-
-    return;
 }
 
 // 要素を表示
@@ -38,7 +36,6 @@ void printArray (const int X[]) {
         printf("%d", X[i]);
     }
     printf("}\n");
-    return;
 }
 
 // 昇順ソート済み配列に対して、隣接する重複要素を削除
@@ -52,7 +49,6 @@ void unique (int X[]) {
         }
     }
     X[j + 1] = -1;
-    return;
 }
 
 // 昇順にソート
@@ -69,14 +65,12 @@ void sort (int X[]) {
             }
         }
     }
-    return;
 }
 
 // 配列を表示用に整形
 void formatArray(int X[]) {
     sort(X);
     unique(X);
-    return;
 }
 
 // 共通部分集合を計算
@@ -94,8 +88,6 @@ void calcCommon (int X[], const int A[], const int B[]) {
     X[k] = -1;
 
     formatArray(X);
-
-    return;
 }
 
 // 和集合を計算
@@ -111,8 +103,6 @@ void calcUnion (int X[], const int A[], const int B[]) {
     X[k] = -1;
 
     formatArray(X);
-
-    return;
 }
 
 int main () {
